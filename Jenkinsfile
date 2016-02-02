@@ -41,7 +41,7 @@ docker.image('cloudbees/java-build-tools:0.0.6').inside {
     wrap([$class: 'ConfigFileBuildWrapper',
         managedFiles: [[fileId: 'maven-settings-for-my-spring-boot-app', targetLocation: "${mavenSettingsFile}"]]]) {
 
-        sh "mvn -s ${mavenSettingsFile} source:jar javadoc:javadoc deploy -DskipTests"
+        sh "mvn -s ${mavenSettingsFile} deploy -DskipTests"
 
     }
     
