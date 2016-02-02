@@ -93,5 +93,30 @@
             </plugins>
           </build>
         </profile>        
+        <profile>
+          <id>javadocs</id>
+          <activation>
+            <property>
+              <name>!skip-javadocs</name>
+            </property>
+          </activation>
+          <build>
+            <plugins>
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <id>attach-javadocs-single</id>
+                    <goals>
+                      <goal>jar</goal>
+                    </goals>
+                  </execution>
+                </executions>
+                <inherited>true</inherited>
+              </plugin>
+            </plugins>
+          </build>
+        </profile>        
     </profiles>
 </project>
