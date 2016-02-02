@@ -9,7 +9,7 @@ docker.image('cloudbees/java-build-tools:0.0.6').inside {
     wrap([$class: 'ConfigFileBuildWrapper',
         managedFiles: [[fileId: 'maven-settings-for-my-spring-boot-app', targetLocation: "${mavenSettingsFile}"]]]) {
 
-        sh "mvn -s ${mavenSettingsFile} clean source:jar javadoc:javadoc checkstyle:checkstyle pmd:pmd findbugs:findbugs package deploy"
+        sh "mvn -s ${mavenSettingsFile} clean source:jar javadoc:javadoc checkstyle:checkstyle pmd:pmd findbugs:findbugs deploy"
 
         step([$class: 'ArtifactArchiver', artifacts: 'target/*.jar'])
         step([$class: 'WarningsPublisher', consoleParsers: [[parserName: 'Maven']]])
