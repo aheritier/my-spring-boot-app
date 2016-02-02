@@ -18,8 +18,8 @@
     </parent>
 
     <scm>
-        <connection>scm:git:https://github.com/cyrille-leclerc/my-spring-boot-app.git</connection>
-        <url>https://github.com/cyrille-leclerc/my-spring-boot-app</url>
+        <connection>scm:git:https://github.com/aheritier/my-spring-boot-app.git</connection>
+        <url>https://github.com/aheritier/my-spring-boot-app</url>
       <tag>HEAD</tag>
   </scm>
 
