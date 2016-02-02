@@ -4,15 +4,15 @@ docker.image('cloudbees/java-build-tools:0.0.6').inside {
 
     checkout scm
 
-    stage 'Compilation'
     def mavenSettingsFile = "${pwd()}/.m2/settings.xml"
+
+    stage 'Compilation'
     wrap([$class: 'ConfigFileBuildWrapper',
         managedFiles: [[fileId: 'maven-settings-for-my-spring-boot-app', targetLocation: "${mavenSettingsFile}"]]]) {
         sh "mvn -s ${mavenSettingsFile} clean test-compile"
     }
 
     stage 'Unit tests'
-    def mavenSettingsFile = "${pwd()}/.m2/settings.xml"
     wrap([$class: 'ConfigFileBuildWrapper',
         managedFiles: [[fileId: 'maven-settings-for-my-spring-boot-app', targetLocation: "${mavenSettingsFile}"]]]) {
         sh "mvn -s ${mavenSettingsFile} test"
