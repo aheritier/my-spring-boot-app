@@ -66,4 +66,32 @@
             <url>http://nexus.beesshop.org/content/repositories/releases</url>
         </repository>
     </distributionManagement>
+    
+    <profiles>
+        <profile>
+          <id>sources</id>
+          <activation>
+            <property>
+              <name>!skip-sources</name>
+            </property>
+          </activation>
+          <build>
+            <plugins>
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <id>attach-sources</id>
+                    <goals>
+                      <goal>jar-no-fork</goal>
+                    </goals>
+                  </execution>
+                </executions>
+                <inherited>true</inherited>
+              </plugin>
+            </plugins>
+          </build>
+        </profile>        
+    </profiles>
 </project>
