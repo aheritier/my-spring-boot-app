@@ -23,6 +23,13 @@ docker.image('cloudbees/java-build-tools:0.0.6').inside {
         managedFiles: [[fileId: 'maven-settings-for-my-spring-boot-app', targetLocation: "${mavenSettingsFile}"]]]) {
         sh "mvn -s ${mavenSettingsFile} checkstyle:checkstyle pmd:pmd findbugs:findbugs javadoc:javadoc"
     }
+
+    stage 'Deploy'
+    wrap([$class: 'ConfigFileBuildWrapper',
+        managedFiles: [[fileId: 'maven-settings-for-my-spring-boot-app', targetLocation: "${mavenSettingsFile}"]]]) {
+        sh "mvn -s ${mavenSettingsFile} deploy -DskipTests -DdeployAtEnd=true"
+    }
+    
     step([$class: 'ArtifactArchiver', artifacts: 'target/*.jar'])
     step([$class: 'WarningsPublisher', consoleParsers: [[parserName: 'Maven']]])
     step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
@@ -34,11 +41,4 @@ docker.image('cloudbees/java-build-tools:0.0.6').inside {
     step([$class: 'PmdPublisher', pattern: '**/target/pmd.xml'])
     step([$class: 'FindBugsPublisher', pattern: '**/findbugsXml.xml'])
     step([$class: 'AnalysisPublisher'])
-
-    stage 'Deploy'
-    wrap([$class: 'ConfigFileBuildWrapper',
-        managedFiles: [[fileId: 'maven-settings-for-my-spring-boot-app', targetLocation: "${mavenSettingsFile}"]]]) {
-        sh "mvn -s ${mavenSettingsFile} deploy -DskipTests -DdeployAtEnd=true"
-    }
-    
 }
